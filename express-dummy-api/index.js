@@ -10,7 +10,7 @@ app.get("/", (__, res) =>
       date: new Date(),
     });
     // res.status(404).send("not found");
-  }, 50)
+  }, 200)
 );
 
 app.listen(3000, () => console.log("Dummy API is up on port 3000"));
