@@ -14,7 +14,6 @@ export class AppRepository {
   @CircuitBreaker()
   async getHello(): Promise<any> {
     return new Promise(async (resolve, reject) => {
-      console.log(test);
       try {
         const response = await firstValueFrom(
           this.http.get('/').pipe(
