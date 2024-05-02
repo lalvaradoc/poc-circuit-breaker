@@ -13,24 +13,17 @@ export class AppRepository {
   }
   @CircuitBreaker()
   async getHello(): Promise<any> {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const response = await firstValueFrom(
-          this.http.get('/').pipe(
-            catchError((error) => {
-              throw new HttpException(
-                error.response ? error.response.data : 'Internal Server Error',
-                error.response ? error.response.status : 500,
-              );
-            }),
-            map((response) => response.data),
-          ),
-        );
-        resolve(response);
-      } catch (error) {
-        console.error('getHello', error);
-        reject(error);
-      }
-    });
+    const response = await firstValueFrom(
+      this.http.get('/').pipe(
+        catchError((error) => {
+          throw new HttpException(
+            error.response ? error.response.data : 'Internal Server Error',
+            error.response ? error.response.status : 500,
+          );
+        }),
+        map((response) => response.data),
+      ),
+    );
+    return response;
   }
 }
