@@ -11,7 +11,11 @@ export class AppRepository {
       return config;
     });
   }
-  @CircuitBreaker()
+  @CircuitBreaker({
+    timeout: 200,
+    errorThresholdPercentage: 20,
+    resetTimeout: 3000,
+  })
   async getHello(): Promise<any> {
     const response = await firstValueFrom(
       this.http.get('/').pipe(

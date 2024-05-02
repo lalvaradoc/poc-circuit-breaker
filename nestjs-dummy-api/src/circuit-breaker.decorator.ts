@@ -8,8 +8,9 @@ export type CircuitBreakerOptionsType = {
 };
 
 export type CircuitBreakerConfig = {
-  defaultResult: any;
-  circuitBreakerConfig?: CircuitBreakerOptionsType;
+  timeout?: number;
+  errorThresholdPercentage?: number;
+  resetTimeout?: number;
 };
 
 export const breakerOptions = {
@@ -37,16 +38,10 @@ export const CircuitBreaker = (
       get() {
         const breaker = new OpossumCircuitBreaker(descriptor.value.bind(this), {
           ...breakerOptions,
-          ...circuitBreakerConfig?.circuitBreakerConfig,
+          ...circuitBreakerConfig,
         });
 
         const wrapperFn = async (...args: any[]) => {
-          breaker.fallback(() => {
-            throw new HttpException(
-              'Servicio no disponible por el momento, intente de nuevo más tarde.',
-              HttpStatus.INTERNAL_SERVER_ERROR,
-            );
-          });
           return breaker
             .fire(...args)
             .then((res) => res)
