@@ -1,12 +1,6 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import OpossumCircuitBreaker from 'opossum';
 
-export type CircuitBreakerOptionsType = {
-  timeout?: number;
-  errorThresholdPercentage?: number;
-  resetTimeout?: number;
-};
-
 export type CircuitBreakerConfig = {
   timeout?: number;
   errorThresholdPercentage?: number;
